@@ -1,4 +1,29 @@
-  const byte Green = 3;
+/*
+LichterKette version 1.0
+
+At first arduino runs setup and assignes pinMode to pins. 
+There are 4 different colours in this order: 
+  *Red
+  *Blue
+  *Yellow
+  *Green
+and a button with an attachInterrupt.
+
+After the setup arduino goes into loop() where it loops indefinitely. 
+from there it goes, dependin from variable switcher, into it representetiv function.
+Klick of a button calls switch_mode() where the variable switcher and therefor the function of LichterKette is changed. 
+
+To add a function simply write a new function 
+(using: 
+digitalWrite(colour, state); 
+myDelay(delay in miliseconds);
+in various order for example)
+and add it to switchcase in loop().
+
+*/
+
+
+const byte Green = 3;
   const byte Red = 4;
   const byte Yellow = 5;
   const byte Blue = 6;
@@ -96,7 +121,7 @@ void waterfall_forward(){
   all_off();
 
   //Red Blue Yellow Green
- 
+    //to get random delay between 100 and 1000 miliseconds 
     random_delay = random(100, 1000);
     
     for(int i = 0; i <= 10; ++i){
@@ -122,7 +147,7 @@ void waterfall_forward(){
 void waterfall_backward(){
    all_off();
    //Green Yellow Blue Red
- 
+      //to get random delay between 100 and 1000 miliseconds
       random_delay = random(100, 1000);
       
       for(int i = 0; i <= 10; ++i){
@@ -161,25 +186,19 @@ void switch_mode(){
  unsigned long interrupt_time = millis();
  
  // If interrupts come faster than 200ms, assume it's a bounce and ignore
- if (interrupt_time - last_interrupt_time > 200) 
- {
-    
-  interrupts();
-  switcher +=1;
-  if(switcher > 6) switcher = 1;
-  changeloop = true;
-  Serial.println(switcher);
- }
+   if (interrupt_time - last_interrupt_time > 200) {
+
+    interrupts();
+    switcher +=1;
+    if(switcher > 6) switcher = 1;
+    changeloop = true;
+
+   }
   last_interrupt_time = interrupt_time;
 
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  //Serial.println("loop");
-
-  
-
 
   changeloop = false;
   
